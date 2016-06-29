@@ -6,7 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public abstract class GenericService<E extends GenericEntity, R extends JpaRepository<E, Integer>> {
+public abstract class GenericService<
+        E extends GenericEntity,
+        R extends JpaRepository<E, Integer>> {
+
     public abstract R getRepository();
 
     @Transactional
@@ -16,6 +19,7 @@ public abstract class GenericService<E extends GenericEntity, R extends JpaRepos
 
     @Transactional
     public E create(E entity) {
+        entity.setId(0);
         return getRepository().saveAndFlush(entity);
     }
 
