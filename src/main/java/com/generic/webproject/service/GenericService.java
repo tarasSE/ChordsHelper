@@ -14,7 +14,10 @@ public abstract class GenericService<
 
     @Transactional
     public List<E> getAll() {
-        return getRepository().findAll();
+        List<E> list = getRepository().findAll();
+        list.sort((o1, o2) -> o1.getId() - o2.getId());
+
+        return list;
     }
 
     @Transactional

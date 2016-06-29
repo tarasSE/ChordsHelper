@@ -32,11 +32,7 @@ public abstract class GenericCrudController<
 
     @RequestMapping(method = GET)
     public List<GenericDTO> getAll() {
-        List<E> currencies = getService().getAll();
-        currencies
-                .sort((o1, o2) -> o1.getId() - o2.getId());
-
-        return currencies
+        return getService().getAll()
                 .parallelStream()
                 .map(x -> mapper.map(x, getDtoClass()))
                 .collect(Collectors.toList());
