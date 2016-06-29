@@ -302,10 +302,16 @@
 
         <!--</dependency>-->
 
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.hateoas</groupId>-->
+            <!--<artifactId>spring-hateoas</artifactId>-->
+            <!--<version>0.19.0.RELEASE</version>-->
+        <!--</dependency>-->
+
         <dependency>
-            <groupId>org.springframework.hateoas</groupId>
-            <artifactId>spring-hateoas</artifactId>
-            <version>0.19.0.RELEASE</version>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+            <version>5.5.1</version>
         </dependency>
 
     </dependencies>
