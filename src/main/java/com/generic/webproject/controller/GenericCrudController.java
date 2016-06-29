@@ -49,14 +49,16 @@ public abstract class GenericCrudController<
 
     @RequestMapping(method = POST)
     @ResponseBody
-    public E create(@RequestBody ED entity) throws IllegalAccessException, InstantiationException {
-        return getService().create(mapper.map(entity, getEntityClass()));
+    public ED create(@RequestBody ED entity) throws IllegalAccessException, InstantiationException {
+        E e = getService().create(mapper.map(entity, getEntityClass()));
+        return mapper.map(e, getDtoClass());
     }
 
     @RequestMapping(value = "/{id}", method = PUT)
     @ResponseBody
-    public E update(@RequestBody ED entity, @PathVariable Integer id) throws IllegalAccessException, InstantiationException {
-        return getService().update(mapper.map(entity, getEntityClass()), id);
+    public ED update(@RequestBody ED entity, @PathVariable Integer id) throws IllegalAccessException, InstantiationException {
+        E e = getService().update(mapper.map(entity, getEntityClass()), id);
+        return mapper.map(e, getDtoClass());
     }
 
     @RequestMapping(value = "/{id}", method = DELETE)
