@@ -3,6 +3,8 @@ package com.generic.webproject.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.dozer.Mapping;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
@@ -19,6 +21,7 @@ public class ChordDifficulty extends GenericEntity {
     @Mapping("difficulty")
     private ChordDifficultyEnum difficulty;
 
+    @Fetch(FetchMode.JOIN)
     @OneToOne
     private Chord chord;
 

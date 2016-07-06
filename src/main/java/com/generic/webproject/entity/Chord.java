@@ -3,6 +3,8 @@ package com.generic.webproject.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.dozer.Mapping;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,7 @@ public class Chord extends GenericEntity {
     private boolean isDefault;
 
     @Mapping("variants")
+    @Fetch(FetchMode.JOIN)
     @OneToMany(fetch = FetchType.EAGER)
     private List<ChordVariant> variants;
 }
