@@ -1,8 +1,7 @@
-CREATE TABLE currencies (
-  id         SERIAL  NOT NULL,
-  name       VARCHAR NOT NULL,
-  short_name VARCHAR NOT NULL,
-  code       INT     NOT NULL,
-  symbol     CHAR    NOT NULL,
+CREATE TABLE users (
+  id       SERIAL  NOT NULL,
+  username VARCHAR NOT NULL,
+  password VARCHAR NOT NULL,
+  email    VARCHAR NOT NULL,
   PRIMARY KEY (id)
 );

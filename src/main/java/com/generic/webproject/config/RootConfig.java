@@ -1,8 +1,9 @@
 package com.generic.webproject.config;
 
-import org.dozer.DozerBeanMapper;
-import org.dozer.Mapper;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
@@ -12,8 +13,4 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
         })
 @Import(WebConfig.class)
 public class RootConfig {
-        @Bean
-        public Mapper beanMapper() {
-            return new DozerBeanMapper();
-        }
 }

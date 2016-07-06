@@ -1,16 +1,16 @@
 package com.generic.webproject.config;
 
+import org.dozer.DozerBeanMapper;
+import org.dozer.Mapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,14 +22,19 @@ import java.util.Properties;
 public class WebConfig extends WebMvcConfigurerAdapter {
     protected final static String ACTIVE_PROFILES = "spring.active-profiles";
 
+//    @Bean
+//    public ViewResolver viewResolver() {
+//        InternalResourceViewResolver resolver =
+//                new InternalResourceViewResolver();
+//        resolver.setPrefix("/WEB-INF/views/");
+//        resolver.setSuffix(".jsp");
+//        resolver.setExposeContextBeansAsAttributes(true);
+//        return resolver;
+//    }
+
     @Bean
-    public ViewResolver viewResolver() {
-        InternalResourceViewResolver resolver =
-                new InternalResourceViewResolver();
-        resolver.setPrefix("/WEB-INF/views/");
-        resolver.setSuffix(".jsp");
-        resolver.setExposeContextBeansAsAttributes(true);
-        return resolver;
+    public Mapper beanMapper() {
+        return new DozerBeanMapper();
     }
 
     @Override
