@@ -6,4 +6,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public interface ChordDifficultyRepository extends JpaRepository<ChordDifficulty, Integer>{
+    ChordDifficulty findByChordId(Integer id);
 }

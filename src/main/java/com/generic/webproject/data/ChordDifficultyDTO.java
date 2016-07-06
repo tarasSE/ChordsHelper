@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChordDifficultyDTO extends GenericDTO<ChordDifficulty> {
 
-    private Integer id;
+//    private Integer id;
 
-    private String difficulty;
+    private ChordDifficulty.ChordDifficultyEnum difficulty;
 }
