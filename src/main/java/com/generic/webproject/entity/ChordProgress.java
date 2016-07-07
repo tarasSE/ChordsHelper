@@ -7,9 +7,8 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -21,6 +20,10 @@ public class ChordProgress extends GenericEntity {
     @Mapping("value")
     private ChordProgressEnum progress;
 
+    @Mapping("lastSeen")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastSeen;
+
     @Fetch(FetchMode.JOIN)
     @OneToOne
     private Chord chord;
@@ -29,6 +32,6 @@ public class ChordProgress extends GenericEntity {
 //    private User user;
 
     public static enum ChordProgressEnum {
-        A, B, C, D, E, F
+        F, E, D, C, B, A
     }
 }

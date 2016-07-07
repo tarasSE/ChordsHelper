@@ -1,6 +1,6 @@
 package com.generic.webproject.data;
 
-import com.generic.webproject.entity.ChordVariant;
+import com.generic.webproject.entity.ChordPattern;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Component
-public class ChordVariantDTO extends GenericDTO<ChordVariant> {
+public class ChordPatternDTO extends GenericDTO<ChordPattern> {
 
     private Integer id;
 

@@ -19,36 +19,27 @@ public abstract class GenericService<
     protected Mapper mapper;
 
     public abstract R getRepository();
-
-    public abstract Class<ED> getDtoClass();
-
     public abstract Class<E> getEntityClass();
-
+    public abstract Class<ED> getDtoClass();
 
     @Transactional
     public List<ED> getAll() {
-        List<E> list = getRepository().findAll();
-        list.sort((o1, o2) -> o1.getId() - o2.getId());
-
-        return list.parallelStream()
-                .map(x -> mapper.map(x, getDtoClass()))
+        return getRepository().findAll()
+                .parallelStream()
+                .map(this::toDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public ED create(ED entity) {
-        E e = mapper.map(entity, getEntityClass());
-        e.setId(0);
-        E result = getRepository().saveAndFlush(e);
-        return mapper.map(result, getDtoClass());
+    public ED create(ED dto) {
+        dto.setId(0);
+        return toDto(getRepository().saveAndFlush(toEntity(dto)));
     }
 
     @Transactional
-    public ED update(ED entity, Integer id) {
-        E e = mapper.map(entity, getEntityClass());
-        e.setId(id);
-        E result = getRepository().saveAndFlush(e);
-        return mapper.map(result, getDtoClass());
+    public ED update(ED dto, Integer id) {
+        dto.setId(id);
+        return toDto(getRepository().saveAndFlush(toEntity(dto)));
     }
 
     @Transactional
@@ -58,6 +49,14 @@ public abstract class GenericService<
 
     @Transactional
     public ED getById(Integer id) {
-        return mapper.map(getRepository().findOne(id), getDtoClass());
+        return toDto(getRepository().findOne(id));
+    }
+
+    public ED toDto(E entity) {
+        return mapper.map(entity, getDtoClass());
+    }
+
+    public E toEntity(ED dto) {
+        return mapper.map(dto, getEntityClass());
     }
 }

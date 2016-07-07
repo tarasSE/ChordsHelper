@@ -10,7 +10,6 @@ import javax.persistence.MappedSuperclass;
 @Data
 @MappedSuperclass
 public abstract class GenericEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

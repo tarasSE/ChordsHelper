@@ -14,12 +14,10 @@ public class ChordDTO extends GenericDTO<Chord> {
 
     private Integer id;
 
-    private String name;
+    private Chord.Note baseNote;
 
-    private List variants;
+    private boolean isDefault;
 
-    private ChordDifficultyDTO difficulty;
-
-    private ChordProgressDTO progress;
+    private List<ChordPatternDTO> patterns;
 
 }

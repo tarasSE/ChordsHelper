@@ -2,17 +2,14 @@ package com.generic.webproject.entity;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.dozer.Mapping;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
@@ -22,15 +19,15 @@ import java.util.List;
 @Component
 public class Chord extends GenericEntity {
 
-    @Mapping("name")
-    @NotEmpty
-    @Size(min = 1, max = 10)
-    private String name;
+    private Note baseNote;
 
     private boolean isDefault;
 
-    @Mapping("variants")
     @Fetch(FetchMode.JOIN)
     @OneToMany(fetch = FetchType.EAGER)
-    private List<ChordVariant> variants;
+    private List<ChordPattern> patterns;
+
+    public enum Note{
+        C, Csh, D, Dsh, E, F, Fsh, G, Gsh, A, B, H
+    }
 }

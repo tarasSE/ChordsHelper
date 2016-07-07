@@ -21,13 +21,12 @@ public class UserService extends GenericService<User, UserDTO, UserRepository>{
     }
 
     @Override
-    public Class<UserDTO> getDtoClass() {
-        return UserDTO.class;
-    }
-
-    @Override
     public Class<User> getEntityClass() {
         return User.class;
     }
 
+    @Override
+    public Class<UserDTO> getDtoClass() {
+        return UserDTO.class;
+    }
 }

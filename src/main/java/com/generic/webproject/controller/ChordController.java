@@ -12,8 +12,6 @@ import javax.inject.Inject;
 @RequestMapping(value = "/chord", headers = {"Accept=application/json"})
 public class ChordController extends GenericCrudController<Chord, ChordDTO, ChordService>{
 
-
-
     @Inject
     private ChordService chordService;
 
@@ -21,5 +19,10 @@ public class ChordController extends GenericCrudController<Chord, ChordDTO, Chor
     public ChordService getService() {
         return chordService;
     }
+
+//    @RequestMapping(value = "/repeat", method = POST)
+//    public ChordDTO repeat(){
+//        return chordService.repeat();
+//    }
 
 }

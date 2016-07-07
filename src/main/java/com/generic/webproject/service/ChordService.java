@@ -1,17 +1,16 @@
 package com.generic.webproject.service;
 
 import com.generic.webproject.data.ChordDTO;
-import com.generic.webproject.data.ChordDifficultyDTO;
-import com.generic.webproject.data.ChordProgressDTO;
-import com.generic.webproject.entity.*;
-import com.generic.webproject.repository.ChordDifficultyRepository;
-import com.generic.webproject.repository.ChordProgressRepository;
+import com.generic.webproject.data.ChordPatternDTO;
+import com.generic.webproject.entity.Chord;
 import com.generic.webproject.repository.ChordRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -20,18 +19,27 @@ public class ChordService extends GenericService<Chord, ChordDTO, ChordRepositor
     @Inject
     private ChordRepository chordRepository;
     @Inject
-    private ChordDifficultyRepository difficultyRepository;
-    @Inject
-    private ChordProgressRepository progressRepository;
+    private ChordPatternService patternService;
+
+    @Override
+    public ChordDTO toDto(Chord entity) {
+        List<ChordPatternDTO> patternDTOs = Collections.EMPTY_LIST;
+
+        if (entity.getPatterns() != null){
+            entity.getPatterns()
+                    .parallelStream()
+                    .map(patternService::toDto)
+                    .collect(Collectors.toList());
+        }
+
+        ChordDTO result = super.toDto(entity);
+        result.setPatterns(patternDTOs);
+        return result;
+    }
 
     @Override
     public ChordRepository getRepository() {
         return chordRepository;
-    }
-
-    @Override
-    public Class<ChordDTO> getDtoClass() {
-        return ChordDTO.class;
     }
 
     @Override
@@ -40,88 +48,49 @@ public class ChordService extends GenericService<Chord, ChordDTO, ChordRepositor
     }
 
     @Override
-    public ChordDTO getById(final Integer id) {
-        ChordDTO chord = super.getById(id);
-        chord.setDifficulty(
-                mapper.map(
-                        difficultyRepository.findByChordId(id),
-                        ChordDifficultyDTO.class)
-        );
-        return chord;
+    public Class<ChordDTO> getDtoClass() {
+        return ChordDTO.class;
     }
 
-    @Override
-    public List<ChordDTO> getAll() {
-        return super.getAll();
-    }
 
-    @Override
-    public ChordDTO create(final ChordDTO entity) {
-        ChordDTO chord = super.create(entity);
+    //    public ChordDTO repeat() {
+//
+//        PriorityQueue<ChordDTO> progresses =
+//                new PriorityQueue<ChordDTO>(10, (x, y) ->
+//                        x.getProgress().getValue()
+//                                .compareTo(y.getProgress().getValue()));
+//
+//        progresses.addAll(getAll()
+//                .parallelStream()
+//                .sorted((x, y) ->
+//                        x.getProgress().getLastSeen()
+//                                .compareTo(y.getProgress().getLastSeen()))
+//                .collect(Collectors.toList()));
+//
+//        ChordDTO chordDTO = progresses.poll();
+//
+//        refreshLastSeen(chordDTO);
+//
+//        return chordDTO;
+//    }
+//
+//    private void refreshLastSeen(ChordDTO chordDTO) {
+//        ChordProgressDTO progressDTO = progressService.getById(chordDTO.getId());
+//        progressService.update(progressDTO, progressDTO.getId());
+//    }
+//
+//    private ChordDTO assembleChordDTO(ChordDTO chord) {
+//        ChordProgressDTO progressDTO = progressService.getByChordId(chord.getId());
+//        if (progressDTO != null) {
+//            chord.setProgress(progressDTO);
+//        }
+//
+//        ChordDifficultyDTO difficultyDTO = difficultyService.getByChordId(chord.getId());
+//        if (difficultyDTO != null) {
+//            chord.setDifficulty(difficultyDTO);
+//        }
+//
+//        return chord;
+//    }
 
-        if (entity.getDifficulty() != null){
-            chord.setDifficulty(entity.getDifficulty());
-            chord = setDifficultyToChord(chord);
-        }
-
-        if (entity.getProgress() != null){
-            chord.setProgress(entity.getProgress());
-            chord = setProgressToChord(chord);
-        }
-
-        return chord;
-    }
-
-    @Override
-    public ChordDTO update(final ChordDTO entity, final Integer id) {
-        ChordDTO chord = super.update(entity, id);
-
-        if (entity.getDifficulty() != null){
-            chord.setDifficulty(entity.getDifficulty());
-            chord = setDifficultyToChord(chord);
-        }
-
-        if (entity.getProgress() != null){
-            chord.setProgress(entity.getProgress());
-            chord = setProgressToChord(chord);
-        }
-
-        return chord;
-    }
-
-    private ChordDTO setDifficultyToChord(final ChordDTO chord){
-        ChordDifficulty difficulty = difficultyRepository.saveAndFlush(
-                ChordDifficultyFactory.getInstance(
-                        chord.getDifficulty().getValue(),
-                        chordRepository.getOne(
-                                chord.getId()
-                        ))
-        );
-
-        chord.setDifficulty(
-                mapper.map(
-                        difficulty,
-                        ChordDifficultyDTO.class)
-        );
-
-        return chord;
-    }
-
-    private ChordDTO setProgressToChord(final ChordDTO chord){
-        ChordProgress progress = progressRepository.saveAndFlush(
-                ChordProgressFactory.getInstance(
-                        chord.getProgress().getValue(),
-                        chordRepository.getOne(
-                                chord.getId()
-                        ))
-        );
-
-        chord.setProgress(
-                mapper.map(
-                        progress,
-                        ChordProgressDTO.class)
-        );
-
-        return chord;
-    }
 }

@@ -31,13 +31,13 @@ public abstract class GenericCrudController<
 
     @RequestMapping(method = POST)
     @ResponseBody
-    public ED create(@RequestBody ED entity) throws IllegalAccessException, InstantiationException {
+    public ED create(@RequestBody ED entity)   {
         return getService().create(entity);
     }
 
     @RequestMapping(value = "/{id}", method = PUT)
     @ResponseBody
-    public ED update(@RequestBody ED entity, @PathVariable Integer id) throws IllegalAccessException, InstantiationException {
+    public ED update(@RequestBody ED entity, @PathVariable Integer id){
        return getService().update(entity, id);
     }
 

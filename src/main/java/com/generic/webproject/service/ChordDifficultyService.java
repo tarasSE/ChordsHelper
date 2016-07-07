@@ -21,13 +21,16 @@ public class ChordDifficultyService extends GenericService<ChordDifficulty, Chor
     }
 
     @Override
-    public Class<ChordDifficultyDTO> getDtoClass() {
-        return ChordDifficultyDTO.class;
-    }
-
-    @Override
     public Class<ChordDifficulty> getEntityClass() {
         return ChordDifficulty.class;
     }
 
+    @Override
+    public Class<ChordDifficultyDTO> getDtoClass() {
+        return ChordDifficultyDTO.class;
+    }
+
+    public ChordDifficultyDTO getByChordId(Integer id) {
+        return toDto(getRepository().findByChordId(id));
+    }
 }

@@ -15,10 +15,14 @@ public class ChordProgressService extends GenericService<ChordProgress, ChordPro
     @Inject
     private ChordProgressRepository progressRepository;
 
-
     @Override
     public ChordProgressRepository getRepository() {
         return progressRepository;
+    }
+
+    @Override
+    public Class<ChordProgress> getEntityClass() {
+        return ChordProgress.class;
     }
 
     @Override
@@ -26,8 +30,8 @@ public class ChordProgressService extends GenericService<ChordProgress, ChordPro
         return ChordProgressDTO.class;
     }
 
-    @Override
-    public Class<ChordProgress> getEntityClass() {
-        return ChordProgress.class;
+
+    public ChordProgressDTO getByChordId(Integer id) {
+        return toDto(getRepository().findByChordId(id));
     }
 }
