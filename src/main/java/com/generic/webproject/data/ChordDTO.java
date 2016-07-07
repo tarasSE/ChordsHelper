@@ -20,4 +20,6 @@ public class ChordDTO extends GenericDTO<Chord> {
 
     private ChordDifficultyDTO difficulty;
 
+    private ChordProgressDTO progress;
+
 }
