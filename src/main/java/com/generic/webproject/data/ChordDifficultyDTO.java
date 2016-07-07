@@ -12,5 +12,5 @@ public class ChordDifficultyDTO extends GenericDTO<ChordDifficulty> {
 
 //    private Integer id;
 
-    private ChordDifficulty.ChordDifficultyEnum difficulty;
+    private ChordDifficulty.ChordDifficultyEnum value;
 }

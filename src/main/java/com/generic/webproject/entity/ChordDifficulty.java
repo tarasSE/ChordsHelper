@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Component
 public class ChordDifficulty extends GenericEntity {
 
-    @Mapping("difficulty")
+    @Mapping("value")
     private ChordDifficultyEnum difficulty;
 
     @Fetch(FetchMode.JOIN)
